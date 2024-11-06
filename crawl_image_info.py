@@ -21,7 +21,7 @@ def crawl_image_info(driver, new_url):
         cachedb.set(new_url, page_source)
 
     soup = BeautifulSoup(page_source, 'html5lib')
-    title = soup.title
+    title = soup.title.get_text().strip()
     el_holder = soup.find_all(class_='imgHolder')
 
     for e_holder in el_holder:

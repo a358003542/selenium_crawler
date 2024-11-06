@@ -1,11 +1,13 @@
 import threading
+import logging
+import os
 
 from selenium import webdriver
-
 from crawl_rank import crawl_rank
 from todo_system import todo_queue, start_todo_queue, TodoItem
 
-import os
+logging.basicConfig(level=logging.DEBUG)
+
 os.environ['CONFIG_MODULE'] = 'config'
 
 # 启动工作线程
