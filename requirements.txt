@@ -1,0 +1,8 @@
+selenium
+beautifulsoup4
+html5lib
+pywander
+requests
+my_fake_useragent
+python-dateutil
+diskcache
