@@ -4,7 +4,7 @@ import time
 from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
-todo_queue = queue.Queue()
+todo_queue = queue.PriorityQueue()
 
 
 @dataclass(order=True)
