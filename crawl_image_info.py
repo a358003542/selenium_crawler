@@ -1,4 +1,5 @@
 import logging
+import time
 
 from bs4 import BeautifulSoup
 
@@ -9,8 +10,9 @@ from todo_system import TodoItem, todo_queue
 logger = logging.getLogger(__name__)
 
 
-def crawl_image_info(driver, new_url):
+def crawl_image_info(driver, new_url, **kwargs):
     result = []
+    last_crawl = None
 
     if cachedb.get(new_url):
         page_source = cachedb.get(new_url)
@@ -19,6 +21,7 @@ def crawl_image_info(driver, new_url):
         driver.implicitly_wait(1)
         page_source = driver.page_source
         cachedb.set(new_url, page_source)
+        last_crawl = time.time()
 
     soup = BeautifulSoup(page_source, 'html5lib')
     title = soup.title.get_text().strip()
@@ -33,5 +36,5 @@ def crawl_image_info(driver, new_url):
         new_url = item
         logger.info(f'add: {new_url}')
 
-        todo_item = TodoItem(priority=10, func=download_image, args=[new_url, title], kwargs={})
+        todo_item = TodoItem(priority=10, func=download_image, args=[new_url, title], kwargs={}, env={'last_crawl': last_crawl})
         todo_queue.put(todo_item)

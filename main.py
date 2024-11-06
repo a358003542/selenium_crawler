@@ -20,13 +20,13 @@ driver = webdriver.Chrome()
 # 开始爬取
 start_url = 'https://www.photos18.com/sort/hits'
 
-for page_num in range(5):
+for page_num in range(1):
     if page_num > 0:
         new_start_url = f'{start_url}?page={page_num}'
     else:
         new_start_url = start_url
 
-    todo_item = TodoItem(priority=-10, func=crawl_rank, args=[driver, new_start_url], kwargs={})
+    todo_item = TodoItem(priority=-10, func=crawl_rank, args=[driver, new_start_url], kwargs={}, env={})
     todo_queue.put(todo_item)
 
 todo_queue.join()
